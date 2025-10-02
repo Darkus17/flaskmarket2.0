@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Корзина{% endblock %}
+{% block content %}
+<h1>Твоя корзина</h1>
+{% if cart_items %}
+<table class="table">
+    <tr><th>Товар</th><th>Количество</th><th>Цена</th><th></th></tr>
+    {% for item in cart_items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.total }} $</td>
+        <td><a href="{{ url_for('shop.remove_from_cart', product_id=item.product.id) }}" class="btn btn-sm btn-danger">Удалить</a></td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="2"><strong>Итого</strong></td>
+        <td>{{ cart_total }} $</td>
+        <td></td>
+    </tr>
+</table>
+<form method="post" action="{{ url_for('shop.checkout') }}">
+    <button class="btn btn-primary">Проверить (stub)</button>
+</form>
+{% else %}
+<p>Твоя корзина пуста</p>
+{% endif %}
+{% endblock %}
